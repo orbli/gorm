@@ -3,6 +3,7 @@ package gorm
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 // Define callbacks for creating
@@ -42,6 +43,12 @@ func updateTimeStampForCreateCallback(scope *Scope) {
 		if updatedAtField, ok := scope.FieldByName("UpdatedAt"); ok {
 			if updatedAtField.IsBlank {
 				updatedAtField.Set(now)
+			}
+		}
+
+		if deletedAtField, ok := scope.FieldByName("DeletedAt"); ok {
+			if deletedAtField.IsBlank {
+				deletedAtField.Set(time.Unix(0,0))
 			}
 		}
 	}
